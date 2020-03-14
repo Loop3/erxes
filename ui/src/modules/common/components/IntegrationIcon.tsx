@@ -24,6 +24,7 @@ const RoundedBackground = styledTS<{ type: string; size?: number }>(
     (props.type === 'facebook-messenger' && colors.socialFacebookMessenger) ||
     (props.type === 'gmail' && colors.socialGmail) ||
     (props.type.includes('nylas') && colors.socialGmail) ||
+    (props.type === 'whatspro' && colors.colorCoreLightGreen) ||
     colors.colorCoreBlue};
 
   i {
@@ -79,6 +80,9 @@ class IntegrationIcon extends React.PureComponent<Props> {
         break;
       case 'chatfuel':
         icon = 'comment-dots';
+        break;
+      case 'whatspro':
+        icon = 'whatsapp';
         break;
       default:
         icon = 'doc-text-inv-1';

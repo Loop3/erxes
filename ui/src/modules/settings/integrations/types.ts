@@ -117,7 +117,8 @@ export type IntegrationTypes =
   | 'nylas-office365'
   | 'nylas-outlook'
   | 'nylas-yahoo'
-  | 'twitter';
+  | 'twitter'
+  | 'whatspro';
 
 export type IntegrationsQueryResponse = {
   integrations: IIntegration[];
@@ -144,6 +145,7 @@ export type ByKindTotalCount = {
   office365: number;
   outlook: number;
   yahoo: number;
+  whatspro: number;
 };
 
 type IntegrationsCount = {

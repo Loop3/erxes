@@ -77,6 +77,7 @@ export const KIND_CHOICES = {
   CALLPRO: 'callpro',
   TWITTER_DM: 'twitter-dm',
   CHATFUEL: 'chatfuel',
+  WHATSPRO: 'whatspro',
   ALL_LIST: [
     'messenger',
     'facebook-post',
@@ -89,7 +90,8 @@ export const KIND_CHOICES = {
     'nylas-gmail',
     'nylas-imap',
     'nylas-office365',
-    'nylas-outlook'
+    'nylas-outlook',
+    'whatspro'
   ]
 };
 
@@ -314,6 +316,16 @@ export const INTEGRATIONS = [
     createModal: 'website',
     createUrl: '/settings/integrations/website',
     category: 'All integrations, For support teams, Marketing automation'
+  },
+  {
+    name: 'WhatsPro',
+    description: 'Get a hold of your Whatsapp messages through your Team Inbox',
+    inMessenger: false,
+    isAvailable: true,
+    kind: 'whatspro',
+    logo: '/images/integrations/whatsapp.png',
+    createModal: 'whatspro',
+    category: 'All integrations, For support teams, Messaging, Conversation'
   },
   {
     name: 'Viber',

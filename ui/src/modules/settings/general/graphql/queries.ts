@@ -12,7 +12,6 @@ const configsGetEnv = `
   query configsGetEnv {
     configsGetEnv {
       USE_BRAND_RESTRICTIONS
-      USE_CHAT_RESTRICTIONS
     }
   }
 `;

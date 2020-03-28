@@ -14,6 +14,10 @@ export const getEnv = () => {
 
   const getItem = name => wenv[name] || process.env[name];
 
+  console.log(wenv);
+  console.log(process.env);
+  
+
   return {
     REACT_APP_API_URL: getItem('REACT_APP_API_URL'),
     REACT_APP_API_SUBSCRIPTION_URL: getItem('REACT_APP_API_SUBSCRIPTION_URL'),

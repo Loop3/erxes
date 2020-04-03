@@ -18,6 +18,7 @@ import Twitter from '../../containers/twitter/Twitter';
 import ViberForm from '../../containers/viber/Form';
 import Website from '../../containers/website/Form';
 import WhatsappForm from '../../containers/whatsapp/Form';
+import WhatsProForm from '../../containers/whatspro/Form';
 import { Box, IntegrationItem, Ribbon, Type } from './styles';
 
 type TotalCount = {
@@ -36,6 +37,7 @@ type TotalCount = {
   viber: number;
   twilio: number;
   whatsapp: number;
+  whatspro: number;
 };
 
 type Props = {
@@ -297,6 +299,16 @@ function renderCreate(createUrl, createModal) {
     );
   }
 
+  if (createModal === INTEGRATION_KINDS.WHATSAPP) {
+    const trigger = <h6>+ {__('Add')}</h6>;
+
+    const content = props => <WhatsappForm {...props} />;
+
+    return (
+      <ModalTrigger title="Add WhatsApp" trigger={trigger} content={content} />
+    );
+  }
+  
   return <Link to={createUrl}>+ {__('Add')}</Link>;
 }
 

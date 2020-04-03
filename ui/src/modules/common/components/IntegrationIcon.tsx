@@ -24,12 +24,13 @@ const RoundedBackground = styledTS<{ type: string; size?: number }>(
     (props.type === 'facebook-messenger' && colors.socialFacebookMessenger) ||
     (props.type === 'gmail' && colors.socialGmail) ||
     (props.type === 'whatsapp' && colors.socialWhatsApp) ||
+    (props.type === 'whatspro' && colors.colorCoreLightGreen) ||
     (props.type.includes('nylas') && colors.socialGmail) ||
     (props.type.includes('telegram') && colors.socialTelegram) ||
     (props.type.includes('viber') && colors.socialViber) ||
     (props.type.includes('line') && colors.socialLine) ||
     (props.type.includes('twilio') && colors.socialTwilio) ||
-    colors.colorCoreRed};
+    colors.colorCoreRed};    
 
   i {
     color: ${colors.colorWhite};
@@ -92,6 +93,10 @@ class IntegrationIcon extends React.PureComponent<Props> {
 
       case 'whatsapp':
         icon = 'whatsapp-fill';
+        break;
+        
+      case 'whatspro':
+        icon = 'whatsapp';
         break;
       default:
         icon = 'doc-text-inv-1';

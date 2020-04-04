@@ -118,6 +118,10 @@ export type IntegrationTypes =
   | 'nylas-outlook'
   | 'nylas-yahoo'
   | 'twitter'
+  | 'smooch-telegram'
+  | 'smooch-viber'
+  | 'smooch-line'
+  | 'smooch-twilio'
   | 'whatspro';
 
 export type IntegrationsQueryResponse = {
@@ -145,6 +149,11 @@ export type ByKindTotalCount = {
   office365: number;
   outlook: number;
   yahoo: number;
+  telegram: number;
+  viber: number;
+  line: number;
+  twilio: number;
+  whatsapp: number;
   whatspro: number;
 };
 

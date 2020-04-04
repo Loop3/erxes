@@ -102,7 +102,7 @@ export default class Editor extends React.Component<EditorProps, State> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.responseTemplate !== this.props.responseTemplate) {  
+    if (nextProps.responseTemplate !== this.props.responseTemplate) {
       const editorState = createStateFromHTML(
         this.state.editorState,
         nextProps.responseTemplate
@@ -177,10 +177,7 @@ export default class Editor extends React.Component<EditorProps, State> {
   };
 
   changeEditorContent = (content: string) => {
-    let editorState = createStateFromHTML(
-      this.state.editorState,
-      content
-    );
+    let editorState = createStateFromHTML(this.state.editorState, content);
 
     const selection = EditorState.moveSelectionToEnd(
       editorState
@@ -195,13 +192,13 @@ export default class Editor extends React.Component<EditorProps, State> {
       selection,
       ' '
     );
-    
+
     const es = EditorState.push(editorState, contentState, 'insert-characters');
 
     editorState = EditorState.moveFocusToEnd(es);
 
     return this.setState({ editorState, templatesState: null });
-  }
+  };
 
   onSelectTemplate = (index?: number) => {
     const { templatesState } = this.state;

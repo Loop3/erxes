@@ -48,7 +48,7 @@ echo "Installed Redis successfully"
 
 # RabbitMQ
 echo "Installing RabbitMQ"
-curl -fsSL https://raw.githubusercontent.com/erxes/erxes/develop/scripts/install/debian10.sh | apt-key add -
+gpg --keyserver "hkps://keys.openpgp.org" --recv-keys "0x0A9AF2115F4687BD29803A206B73A36E6026DFCA"
 tee /etc/apt/sources.list.d/bintray.rabbitmq.list <<EOF
 ## Installs the latest Erlang 22.x release.
 ## Change component to "erlang-21.x" to install the latest 21.x version.

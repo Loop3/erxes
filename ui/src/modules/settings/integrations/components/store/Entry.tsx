@@ -310,16 +310,16 @@ function renderCreate(createUrl, createModal) {
     );
   }
 
-  if (createModal === INTEGRATION_KINDS.WHATSAPP) {
+  if (createModal === INTEGRATION_KINDS.WHATSPRO) {
     const trigger = <h6>+ {__('Add')}</h6>;
 
-    const content = props => <WhatsappForm {...props} />;
+    const content = props => <WhatsProForm {...props} />;
 
     return (
-      <ModalTrigger title="Add WhatsApp" trigger={trigger} content={content} />
+      <ModalTrigger title="Add WhatsPro" trigger={trigger} content={content} />
     );
   }
-  
+
   return <Link to={createUrl}>+ {__('Add')}</Link>;
 }
 

@@ -129,7 +129,7 @@ export type IntegrationTypes =
   | 'smooch-telegram'
   | 'smooch-viber'
   | 'smooch-line'
-  | 'smooch-twilio';
+  | 'smooch-twilio'
   | 'whatspro';
 
 export type IntegrationsQueryResponse = {

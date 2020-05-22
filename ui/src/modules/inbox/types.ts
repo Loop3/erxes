@@ -117,6 +117,7 @@ export interface IEngageData {
 
 export interface IMessage {
   content: string;
+  status: string;
   videoCallData?: IVideoCallData;
   attachments?: any;
   mentionedUserIds?: string[];

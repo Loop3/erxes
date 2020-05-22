@@ -104,6 +104,40 @@ export default class SimpleMessage extends React.Component<Props, {}> {
     );
   }
 
+  renderStatus(status: string, isSameUser: boolean | undefined) {
+    if (!isSameUser) return null;
+    const styles = {
+      marginRight: -10
+    };
+    switch (status) {
+      case '1':
+        return <Icon icon="check-1" />;
+      case '2':
+        return (
+          <div>
+            <Icon icon="check-1" style={styles} />
+            <Icon icon="check-1" />
+          </div>
+        );
+      case '3':
+        return (
+          <div>
+            <Icon icon="check-1" style={styles} color="#4fc3f7" />
+            <Icon icon="check-1" color="#4fc3f7" />
+          </div>
+        );
+      case '4':
+        return (
+          <div>
+            <Icon icon="check-1" style={styles} />
+            <Icon icon="check-1" />
+          </div>
+        );
+      default:
+        return <Icon icon="clock" size={10} style={{ marginRight: 4 }} />;
+    }
+  }
+
   renderContent(hasAttachment: boolean) {
     const { message, renderContent, isStaff } = this.props;
 
@@ -156,6 +190,7 @@ export default class SimpleMessage extends React.Component<Props, {}> {
 
         <MessageBody staff={isStaff}>
           {this.renderContent(hasAttachment)}
+          {this.renderStatus(message.status, isSameUser)}
           <Tip text={dayjs(messageDate).format('lll')}>
             <footer>{dayjs(messageDate).format('LT')}</footer>
           </Tip>

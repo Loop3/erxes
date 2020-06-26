@@ -84,7 +84,11 @@ class IntegrationConfigs extends React.Component<Props, State> {
       <ContentBox>
         <CollapseContent title="Facebook">
           <Info>
-            <a target="_blank" href="https://docs.erxes.io/administrator/system-config#facebook" rel="noopener noreferrer">
+            <a
+              target="_blank"
+              href="https://docs.erxes.io/administrator/system-config#facebook"
+              rel="noopener noreferrer"
+            >
               {__('Learn how to set Facebook Integration Variables')}
             </a>
           </Info>
@@ -137,7 +141,7 @@ class IntegrationConfigs extends React.Component<Props, State> {
         </CollapseContent>
 
         <CollapseContent title="Video call">
-        <Info>
+          <Info>
             <a
               target="_blank"
               href="https://docs.erxes.io/administrator/system-config#video-calls"

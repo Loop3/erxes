@@ -98,7 +98,7 @@ class IntegrationIcon extends React.PureComponent<Props> {
       case 'whatsapp':
         icon = 'whatsapp-fill';
         break;
-        
+
       case 'whatspro':
         icon = 'whatsapp';
         break;

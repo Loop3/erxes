@@ -8,10 +8,11 @@ type Props = {
   message: IMessage;
   isSameUser: boolean;
   conversationFirstMessage?: IMessage;
+  kind: string;
 };
 
 function Message(props: Props) {
-  const { message, isSameUser } = props;
+  const { message, isSameUser, kind } = props;
 
   if (message.formWidgetData) {
     return <FormMessage {...props} />;
@@ -26,6 +27,7 @@ function Message(props: Props) {
       message={message}
       isStaff={message.userId ? true : false}
       isSameUser={isSameUser}
+      kind={kind}
     />
   );
 }

@@ -97,6 +97,7 @@ export default class FacebookConversation extends React.Component<Props> {
           message={message}
           isStaff={!message.customerId}
           key={message._id}
+          kind={'facebook'}
         />
       );
     });

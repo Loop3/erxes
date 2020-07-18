@@ -213,7 +213,7 @@ export const INTEGRATIONS = [
     kind: 'nylas-office365',
     logo: '/images/integrations/office365.png',
     createModal: 'nylas-office365',
-    createUrl: '/settings/integrations/nylas-office365',
+    createUrl: 'nylas/oauth2/callback',
     category:
       'All integrations, For support teams, Marketing automation, Email marketing, Conversation'
   },
@@ -226,7 +226,7 @@ export const INTEGRATIONS = [
     kind: 'nylas-gmail',
     logo: '/images/integrations/gmail.png',
     createModal: 'nylas-gmail',
-    createUrl: '/settings/integrations/nylas-gmail',
+    createUrl: 'nylas/oauth2/callback',
     category:
       'All integrations, For support teams, Email marketing, Marketing automation, Conversation'
   },
@@ -305,17 +305,6 @@ export const INTEGRATIONS = [
       'All integrations, For support teams, Marketing automation, Phone and video, Conversation'
   },
   {
-    name: 'Twitter',
-    description: 'Connect Twitter DMs to your Team Inbox',
-    inMessenger: false,
-    isAvailable: true,
-    kind: 'twitter-dm',
-    logo: '/images/integrations/twitter.png',
-    createModal: 'twitter',
-    category:
-      'All integrations, For support teams, Marketing automation, Social media, Messaging, Conversation'
-  },
-  {
     name: 'Chatfuel',
     description: 'Connect your chatfuel account',
     inMessenger: false,
@@ -380,7 +369,7 @@ export const INTEGRATIONS = [
       'All integrations, For support teams, Marketing automation, Messaging, Conversation'
   },
   {
-    name: 'Line by Sunshine Conversations',
+    name: 'Line',
     description: 'See and reply to Line messages in your Team Inbox',
     inMessenger: false,
     isAvailable: true,
@@ -391,16 +380,14 @@ export const INTEGRATIONS = [
       'All integrations, For support teams, For sales teams, For marketing teams, Marketing automation, Messaging, Phone and video, Conversation'
   },
   {
-    name: 'Twilio SMS by Sunshine Conversations',
-    description:
-      'Connect Twilio API for SMS then send and receive text messages anywhere in the world',
+    name: 'Twitter',
+    description: 'Connect Twitter DMs to your Team Inbox',
     inMessenger: false,
-    isAvailable: true,
-    kind: 'smooch-twilio',
-    logo: '/images/integrations/twilio-ipm.png',
-    createModal: 'smooch-twilio',
+    isAvailable: false,
+    kind: 'twitter-dm',
+    logo: '/images/integrations/twitter.png',
     category:
-      'All integrations, For support teams, For sales teams, For marketing teams, Messaging, Marketing automation, Conversation'
+      'All integrations, For support teams, Marketing automation, Social media, Messaging, Conversation'
   },
   {
     name: 'Wechat',
@@ -431,16 +418,6 @@ export const INTEGRATIONS = [
       'All integrations, For support teams, Messaging, Marketing automation, Social media, Conversation'
   },
   {
-    name: 'Aircall',
-    description:
-      'Connect with Aircall and handle calls directly from your Team Inbox',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/aircall.png',
-    category:
-      'All integrations, For support teams, Marketing automation, Phone and video, Social media, Conversation'
-  },
-  {
     name: 'Amazon Lex',
     description: 'Build conversational interfaces using voice and text',
     inMessenger: false,
@@ -468,15 +445,6 @@ export const INTEGRATIONS = [
     logo: '/images/integrations/cisco-webex.png',
     category:
       'All integrations, For support teams, For sales teams, For marketing teams, Marketing automation, Phone and video, Conversation'
-  },
-  {
-    name: 'Dashbot',
-    description: 'Connect to bot analytics platform - Dashbot',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/dashbot.png',
-    category:
-      'All integrations, For support teams, For sales teams, For marketing teams, Marketing automation, Messaging, Conversation'
   },
   {
     name: 'Google Dialog Flow',
@@ -556,16 +524,6 @@ export const INTEGRATIONS = [
       'All integrations, For support teams, For sales teams, For marketing teams, Messaging, Conversation'
   },
   {
-    name: 'Twilio IPM',
-    description:
-      'Connect Twilio IPM account then integrating with third party software in your Team Inbox',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/twilio-ipm.png',
-    category:
-      'All integrations, For support teams, For sales teams, For marketing teams, Marketing automation, Messaging, Conversation'
-  },
-  {
     name: 'WIT.AI',
     description: 'Connect WIT.AI and share knowledge in your Team Inbox',
     inMessenger: false,
@@ -610,34 +568,6 @@ export const INTEGRATIONS = [
     logo: '/images/integrations/chatbase.png',
     category:
       'All integrations, For support teams, For sales teams, For marketing teams, Analytics, Marketing automation, Messaging, Phone and video, Conversation'
-  },
-  {
-    name: 'Autopilot',
-    description: 'Use the marketing automation section in your Team Inbox',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/autopilot.png',
-    category:
-      'All integrations, For support teams, For sales teams, For marketing teams, Marketing automation, Email marketing, Phone and video, Engage'
-  },
-  {
-    name: 'Base',
-    description: 'Connect Base chat then fun unlimited in your Team Inbox',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/base.png',
-    category:
-      'All integrations, For sales teams, CRM, Marketing automation, Social media, Sales pipeline'
-  },
-  {
-    name: 'Chatbot.mn',
-    description:
-      'Connect Chatbot to your Team Inbox and increase customer engagement',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/chatbot.png',
-    category:
-      'All integrations, For support teams, For sales teams, For marketing teams, Messaging, Marketing automation, Conversation'
   },
   {
     name: 'Clearbit',
@@ -741,15 +671,6 @@ export const INTEGRATIONS = [
     logo: '/images/integrations/jira.png',
     category:
       'All integrations, For sales teams, For marketing teams, Project management'
-  },
-  {
-    name: 'Justcall.io',
-    description: 'Connect to JustCall and join cloud-based phone system',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/justcall.png',
-    category:
-      'All integrations, For support teams, Messaging, Marketing automation, Phone and video, Conversation'
   },
   {
     name: 'Keen',
@@ -865,14 +786,6 @@ export const INTEGRATIONS = [
       'All integrations, For sales teams, For marketing teams, Contacts, Data'
   },
   {
-    name: 'Pipedrive',
-    description: 'Connect to Pipedrive and boost your close rate',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/pipedrive.png',
-    category: 'All integrations, For sales teams, CRM, Sales pipeline'
-  },
-  {
     name: 'Salesforce',
     description:
       'Connect SalesForce then  marketing automation, analytics in your Team Inbox',
@@ -940,15 +853,6 @@ export const INTEGRATIONS = [
       'All integrations, For support teams, Phone and video, Conversation'
   },
   {
-    name: 'Trello',
-    description: 'Sign up and start planning, work with any team',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/trello.png',
-    category:
-      'All integrations, For sales teams, For marketing teams, Project management'
-  },
-  {
     name: 'Webhook',
     description:
       'Transparently capture your API interactions and debug them in real-time',
@@ -976,23 +880,6 @@ export const INTEGRATIONS = [
     logo: '/images/integrations/zapier.png',
     category:
       'All integrations, For sales teams, For marketing teams, Contacts, CRM'
-  },
-  {
-    name: 'Zoho',
-    description: 'Sign up and transform your business',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/zoho.png',
-    category:
-      'All integrations, For sales teams, CRM, Project management, Sales pipeline'
-  },
-  {
-    name: 'Calendly',
-    description: 'Schedule your first meeting from your Team Inbox',
-    inMessenger: false,
-    isAvailable: false,
-    logo: '/images/integrations/calendly.png',
-    category: 'All integrations, For sales teams, Scheduling, Sales pipeline'
   }
 ];
 

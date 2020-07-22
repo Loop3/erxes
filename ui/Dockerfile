@@ -9,11 +9,7 @@ RUN apt-get update && \
 
 WORKDIR /erxes
 
-#RUN chown -R node:node /erxes
-
 COPY --chown=node:node . /erxes
-
-#USER node
 
 RUN yarn
 

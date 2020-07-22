@@ -1,6 +1,3 @@
-client
-scripts
-server
 *.yml
 .env*
 .git*
@@ -8,6 +5,4 @@ server
 .snyk
 Dockerfile*
 *.tar.gz
-webpack*.js
-package*.json
-tsconfig*.json
+

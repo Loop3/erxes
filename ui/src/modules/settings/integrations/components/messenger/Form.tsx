@@ -1,26 +1,33 @@
 import { IUser } from 'modules/auth/types';
 import Button from 'modules/common/components/Button';
-import FormControl from 'modules/common/components/form/Control';
 import { Step, Steps } from 'modules/common/components/step';
 import {
+  ControlWrapper,
+  Indicator,
   Preview,
-  StepWrapper,
-  TitleContainer
+  StepWrapper
 } from 'modules/common/components/step/styles';
 import { __, Alert } from 'modules/common/utils';
 import Wrapper from 'modules/layout/components/Wrapper';
 import { IBrand } from 'modules/settings/brands/types';
 import { LANGUAGES } from 'modules/settings/general/constants';
-import { MessengerPreview, Row } from 'modules/settings/integrations/styles';
+import {
+  Content,
+  LeftContent,
+  MessengerPreview
+} from 'modules/settings/integrations/styles';
 import {
   IIntegration,
   IMessages,
+  IMessengerApps,
   IMessengerData,
   IUiOptions
 } from 'modules/settings/integrations/types';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AddOns from '../../containers/messenger/AddOns';
 import { Appearance, Availability, Greeting, Intro, Options } from './steps';
+import Connection from './steps/Connection';
 import CommonPreview from './widgetPreview/CommonPreview';
 
 type Props = {
@@ -32,18 +39,22 @@ type Props = {
       name: string;
       brandId: string;
       languageCode: string;
+      channelIds?: string[];
       messengerData: IMessengerData;
       uiOptions: IUiOptions;
+      messengerApps: IMessengerApps;
     }
   ) => void;
 };
 
 type State = {
   title: string;
+  botEndpointUrl?: string;
   brandId: string;
+  channelIds: string[];
   languageCode: string;
-  activeStep: number;
   color: string;
+  textColor: string;
   wallpaper: string;
   notifyCustomer: boolean;
   supporterIds: string[];
@@ -64,6 +75,7 @@ type State = {
   showLauncher?: boolean;
   forceLogoutWhenResolve?: boolean;
   showVideoCallRequest?: boolean;
+  messengerApps: IMessengerApps;
 };
 
 class CreateMessenger extends React.Component<Props, State> {
@@ -78,18 +90,23 @@ class CreateMessenger extends React.Component<Props, State> {
       showChat: true,
       showLauncher: true,
       forceLogoutWhenResolve: false,
-      showVideoCallRequest: false
+      showVideoCallRequest: false,
+      botEndpointUrl: ''
     };
     const links = configData.links || {};
     const messages = configData.messages || {};
     const uiOptions = integration.uiOptions || {};
+    const channels = integration.channels || [];
+    const messengerApps = {};
 
     this.state = {
       title: integration.name,
+      botEndpointUrl: configData.botEndpointUrl,
       brandId: integration.brandId || '',
       languageCode,
-      activeStep: 1,
+      channelIds: channels.map(item => item._id) || [],
       color: uiOptions.color || '#6569DF',
+      textColor: uiOptions.textColor || '#fff',
       wallpaper: uiOptions.wallpaper || '1',
       notifyCustomer: configData.notifyCustomer || false,
       requireAuth: configData.requireAuth,
@@ -111,7 +128,8 @@ class CreateMessenger extends React.Component<Props, State> {
       facebook: links.facebook || '',
       twitter: links.twitter || '',
       youtube: links.youtube || '',
-      messages: { ...this.generateMessages(messages) }
+      messages: { ...this.generateMessages(messages) },
+      messengerApps
     };
   }
 
@@ -138,16 +156,22 @@ class CreateMessenger extends React.Component<Props, State> {
   }
 
   onChange = <T extends keyof State>(key: T, value: State[T]) => {
-    this.setState({ [key]: value } as Pick<State, keyof State>);
+    this.setState(({ [key]: value } as unknown) as Pick<State, keyof State>);
   };
+
+  handleMessengerApps = (messengerApps: IMessengerApps) => {
+    this.setState({messengerApps});
+  }
 
   save = e => {
     e.preventDefault();
 
     const {
       title,
+      botEndpointUrl,
       brandId,
       languageCode,
+      channelIds,
       messages,
       facebook,
       twitter,
@@ -156,7 +180,8 @@ class CreateMessenger extends React.Component<Props, State> {
       showChat,
       showLauncher,
       forceLogoutWhenResolve,
-      showVideoCallRequest
+      showVideoCallRequest,
+      messengerApps
     } = this.state;
 
     if (!languageCode) {
@@ -176,8 +201,10 @@ class CreateMessenger extends React.Component<Props, State> {
     this.props.save({
       name: title,
       brandId,
+      channelIds,
       languageCode: this.state.languageCode,
       messengerData: {
+        botEndpointUrl,
         notifyCustomer: this.state.notifyCustomer,
         availabilityMethod: this.state.availabilityMethod,
         isOnline: this.state.isOnline,
@@ -198,9 +225,11 @@ class CreateMessenger extends React.Component<Props, State> {
       },
       uiOptions: {
         color: this.state.color,
+        textColor: this.state.textColor,
         wallpaper: this.state.wallpaper,
         logo: this.state.logo
-      }
+      },
+      messengerApps
     });
   };
 
@@ -215,7 +244,7 @@ class CreateMessenger extends React.Component<Props, State> {
   renderButtons() {
     const cancelButton = (
       <Link to="/settings/integrations">
-        <Button btnStyle="simple" size="small" icon="cancel-1">
+        <Button btnStyle="simple" icon="times-circle" uppercase={false}>
           Cancel
         </Button>
       </Link>
@@ -226,8 +255,8 @@ class CreateMessenger extends React.Component<Props, State> {
         {cancelButton}
         <Button
           btnStyle="success"
-          size="small"
-          icon="checked-1"
+          uppercase={false}
+          icon="check-circle"
           onClick={this.save}
         >
           Save
@@ -238,14 +267,15 @@ class CreateMessenger extends React.Component<Props, State> {
 
   render() {
     const {
-      activeStep,
       title,
+      botEndpointUrl,
       supporterIds,
       isOnline,
       availabilityMethod,
       onlineHours,
       timezone,
       color,
+      textColor,
       logoPreviewUrl,
       wallpaper,
       brandId,
@@ -261,9 +291,11 @@ class CreateMessenger extends React.Component<Props, State> {
       showChat,
       showLauncher,
       forceLogoutWhenResolve,
-      showVideoCallRequest
+      showVideoCallRequest,
+      channelIds
     } = this.state;
 
+    const { integration } = this.props;
     const message = messages[languageCode];
 
     const breadcrumb = [
@@ -272,100 +304,123 @@ class CreateMessenger extends React.Component<Props, State> {
       { title: __('Messenger') }
     ];
 
-    const onChange = e =>
-      this.onChange('title', (e.currentTarget as HTMLInputElement).value);
-
     return (
       <StepWrapper>
         <Wrapper.Header title={__('Messenger')} breadcrumb={breadcrumb} />
+        <Content>
+          <LeftContent>
+            <Steps>
+              <Step
+                img="/images/icons/erxes-04.svg"
+                title="Appearance"
+                onClick={this.onStepClick.bind(null, 'appearance')}
+              >
+                <Appearance
+                  onChange={this.onChange}
+                  color={color}
+                  textColor={textColor}
+                  logoPreviewUrl={logoPreviewUrl}
+                  wallpaper={wallpaper}
+                />
+              </Step>
 
-        <TitleContainer>
-          <div>{__('Title')}</div>
-          <FormControl
-            required={true}
-            onChange={onChange}
-            defaultValue={title}
-          />
-          {this.renderButtons()}
-        </TitleContainer>
+              <Step
+                img="/images/icons/erxes-09.svg"
+                title="Greeting"
+                onClick={this.onStepClick.bind(null, 'greeting')}
+              >
+                <Greeting
+                  teamMembers={this.props.teamMembers}
+                  onChange={this.onChange}
+                  supporterIds={supporterIds}
+                  messages={messages}
+                  facebook={facebook}
+                  languageCode={languageCode}
+                  twitter={twitter}
+                  youtube={youtube}
+                />
+              </Step>
 
-        <Row>
-          <Steps active={activeStep}>
-            <Step
-              img="/images/icons/erxes-06.svg"
-              title="Default Settings"
-              onClick={this.onStepClick.bind(null, 'default')}
-            >
-              <Options
-                onChange={this.onChange}
-                brandId={brandId}
-                notifyCustomer={notifyCustomer}
-                languageCode={languageCode}
-                requireAuth={requireAuth}
-                showChat={showChat}
-                showLauncher={showLauncher}
-                forceLogoutWhenResolve={forceLogoutWhenResolve}
-                showVideoCallRequest={showVideoCallRequest}
-              />
-            </Step>
+              <Step
+                img="/images/icons/erxes-07.svg"
+                title="Intro"
+                onClick={this.onStepClick.bind(null, 'intro')}
+              >
+                <Intro
+                  onChange={this.onChange}
+                  messages={messages}
+                  languageCode={languageCode}
+                />
+              </Step>
 
-            <Step
-              img="/images/icons/erxes-09.svg"
-              title="Greeting"
-              onClick={this.onStepClick.bind(null, 'greeting')}
-            >
-              <Greeting
-                teamMembers={this.props.teamMembers}
-                onChange={this.onChange}
-                supporterIds={supporterIds}
-                messages={messages}
-                facebook={facebook}
-                languageCode={languageCode}
-                twitter={twitter}
-                youtube={youtube}
-              />
-            </Step>
+              <Step
+                img="/images/icons/erxes-03.svg"
+                title={__('Hours & Availability')}
+                onClick={this.onStepClick.bind(null, 'hours')}
+              >
+                <Availability
+                  onChange={this.onChange}
+                  isOnline={isOnline}
+                  availabilityMethod={availabilityMethod}
+                  timezone={timezone}
+                  onlineHours={onlineHours}
+                />
+              </Step>
 
-            <Step
-              img="/images/icons/erxes-16.svg"
-              title="Intro"
-              onClick={this.onStepClick.bind(null, 'intro')}
-            >
-              <Intro
-                onChange={this.onChange}
-                messages={messages}
-                languageCode={languageCode}
-              />
-            </Step>
+              <Step
+                img="/images/icons/erxes-06.svg"
+                title="Default Settings"
+                onClick={this.onStepClick.bind(null, 'default')}
+              >
+                <Options
+                  onChange={this.onChange}
+                  notifyCustomer={notifyCustomer}
+                  languageCode={languageCode}
+                  requireAuth={requireAuth}
+                  showChat={showChat}
+                  showLauncher={showLauncher}
+                  forceLogoutWhenResolve={forceLogoutWhenResolve}
+                  showVideoCallRequest={showVideoCallRequest}
+                />
+              </Step>
 
-            <Step
-              img="/images/icons/erxes-03.svg"
-              title="Hours & Availability"
-              onClick={this.onStepClick.bind(null, 'hours')}
-            >
-              <Availability
-                onChange={this.onChange}
-                isOnline={isOnline}
-                availabilityMethod={availabilityMethod}
-                timezone={timezone}
-                onlineHours={onlineHours}
-              />
-            </Step>
-
-            <Step
-              img="/images/icons/erxes-04.svg"
-              title="Appearance"
-              onClick={this.onStepClick.bind(null, 'appearance')}
-              noButton={true}
-            >
-              <Appearance
-                onChange={this.onChange}
-                color={color}
-                logoPreviewUrl={logoPreviewUrl}
-                wallpaper={wallpaper}
-              />
-            </Step>
-          </Steps>
+              <Step
+                img="/images/icons/erxes-16.svg"
+                title={__('Integration Setup')}
+                onClick={this.onStepClick.bind(null, 'setup')}
+              >
+                <Connection
+                  title={title}
+                  botEndpointUrl={botEndpointUrl}
+                  channelIds={channelIds}
+                  brandId={brandId}
+                  onChange={this.onChange}
+                />
+              </Step>
+              <Step
+                img="/images/icons/erxes-15.svg"
+                title={__('Add Ons')}
+                onClick={this.onStepClick.bind(null, 'addon')}
+                noButton={true}
+              >
+                <AddOns 
+                  selectedBrand={brandId} 
+                  websiteMessengerApps={integration && integration.websiteMessengerApps}
+                  leadMessengerApps={integration && integration.leadMessengerApps}
+                  knowledgeBaseMessengerApps={integration && integration.knowledgeBaseMessengerApps}
+                  handleMessengerApps={this.handleMessengerApps} 
+                />
+              </Step>
+            </Steps>
+            <ControlWrapper>
+              <Indicator>
+                {__('You are')}{' '}
+                {this.props.integration ? 'editing' : 'creating'}{' '}
+                <strong>{title}</strong> {__('integration')}
+              </Indicator>
+              {this.renderButtons()}
+            </ControlWrapper>
+          </LeftContent>
 
           <MessengerPreview>
             <Preview fullHeight={true}>
@@ -376,6 +431,7 @@ class CreateMessenger extends React.Component<Props, State> {
                 isOnline={isOnline}
                 wallpaper={wallpaper}
                 color={color}
+                textColor={textColor}
                 brands={this.props.brands}
                 brandId={brandId}
                 logoPreviewStyle={logoPreviewStyle}
@@ -387,7 +443,7 @@ class CreateMessenger extends React.Component<Props, State> {
               />
             </Preview>
           </MessengerPreview>
-        </Row>
+        </Content>
       </StepWrapper>
     );
   }

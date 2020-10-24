@@ -2,17 +2,19 @@ import gql from 'graphql-tag';
 import * as compose from 'lodash.flowright';
 import Spinner from 'modules/common/components/Spinner';
 import { IRouterProps } from 'modules/common/types';
-import { Alert, withProps } from 'modules/common/utils';
+import { __, Alert, withProps } from 'modules/common/utils';
 import { queries as kbQueries } from 'modules/knowledgeBase/graphql';
 import Form from 'modules/settings/integrations/components/messenger/Form';
 import { mutations, queries } from 'modules/settings/integrations/graphql';
 import {
   EditMessengerMutationResponse,
   EditMessengerMutationVariables,
+  IMessengerApps,
   IMessengerData,
   IntegrationDetailQueryResponse,
   IUiOptions,
   SaveMessengerAppearanceMutationResponse,
+  SaveMessengerAppsMutationResponse,
   SaveMessengerConfigsMutationResponse
 } from 'modules/settings/integrations/types';
 import React from 'react';
@@ -34,6 +36,7 @@ type FinalProps = {
 } & Props &
   SaveMessengerConfigsMutationResponse &
   SaveMessengerAppearanceMutationResponse &
+  SaveMessengerAppsMutationResponse &
   EditMessengerMutationResponse &
   IRouterProps;
 
@@ -47,6 +50,7 @@ const EditMessenger = (props: FinalProps) => {
     editMessengerMutation,
     saveConfigsMutation,
     saveAppearanceMutation,
+    messengerAppSaveMutation,
     knowledgeBaseTopicsQuery
   } = props;
 
@@ -64,9 +68,18 @@ const EditMessenger = (props: FinalProps) => {
   const topics = knowledgeBaseTopicsQuery.knowledgeBaseTopics || [];
 
   const save = doc => {
-    const { name, brandId, languageCode, messengerData, uiOptions } = doc;
+    const {
+      name,
+      brandId,
+      channelIds,
+      languageCode,
+      messengerData,
+      uiOptions,
+      messengerApps
+    } = doc;
+
     editMessengerMutation({
-      variables: { _id: integrationId, name, brandId, languageCode }
+      variables: { _id: integrationId, name, brandId, languageCode, channelIds }
     })
       .then(({ data }) => {
         const id = data.integrationsEditMessengerIntegration._id;
@@ -75,7 +88,6 @@ const EditMessenger = (props: FinalProps) => {
           variables: { _id: id, messengerData }
         });
       })
-
       .then(({ data }) => {
         const id = data.integrationsSaveMessengerConfigs._id;
 
@@ -83,13 +95,21 @@ const EditMessenger = (props: FinalProps) => {
           variables: { _id: id, uiOptions }
         });
       })
-
+      .then(() => {
+        return messengerAppSaveMutation({
+          variables: { integrationId, messengerApps }
+        });
+      })
       .then(() => {
         Alert.success('You successfully updated a messenger');
 
         history.push('/settings/integrations?refetch=true');
       })
       .catch(error => {
+        if(error.message.includes('Duplicated messenger for single brand')) {
+          return Alert.warning(__("You've already created a messenger for the brand you've selected. Please choose a different brand or edit the previously created messenger"), 6000);
+        }
+        
         Alert.error(error.message);
       });
   };
@@ -158,6 +178,14 @@ export default withProps<Props>(
       { _id: string; messengerData: IMessengerData }
     >(gql(mutations.integrationsSaveMessengerConfigs), {
       name: 'saveConfigsMutation',
+      options: commonOptions
+    }),
+    graphql<
+      Props,
+      SaveMessengerAppsMutationResponse,
+      { _id: string; messengerApps: IMessengerApps }
+    >(gql(mutations.messengerAppSave), {
+      name: 'messengerAppSaveMutation',
       options: commonOptions
     }),
     graphql<

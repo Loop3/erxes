@@ -71,9 +71,11 @@ Following steps explain the Google Cloud Project. Which allows us to use Google 
 
 ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/google/google-general-10.png)
 
-- Copy the service account file's content to google_cred.json in **erxes-api/google_cred.json.sample**, **erxes-integrations/google_cred.json.sample**, and rename them to **google_cred.json**
+- Copy the service account file's content to google_cred.json in **erxes-integrations/google_cred.json.sample**, and rename it to **google_cred.json**
 
 ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/google/google-general-11.png)
+
+- export GOOGLE_APPLICATION_CREDENTIALS="/Path/to/your/[google_cred].json"
 
 - One last touch, we need to configure erxes, Go to Settings => System Config => General System config
   And configure **GOOGLE PROJECT ID**, **GOOGLE APPLICATION CREDENTIALS** fields as in the sceenshot
@@ -339,6 +341,8 @@ Read and send messages, manage drafts and attachments, search threads and messag
 
 ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/google/google-gmail-16.png)
 
+- Restart the erxes-integrations and verify that corresponding topic, subscriptions created in pub/sub console [here](https://console.cloud.google.com/cloudpubsub/subscription).
+
 Now you are good to create your a Gmail integration
 
 ### Facebook
@@ -403,7 +407,7 @@ Grants an app permission to retrieve Page Access Tokens for the Pages and Apps t
 2. You need to send request to facebook and explain that how you will use this permission. In this step, you must provide
    - a. a detailed description of how your app uses the permission or feature requested, how it adds value for a person using your app, and why it's necessary for app functionality.
    - b. a step-by-step video walkthrough of below.
-   - c. [Here](https://bit.ly/2J6j5Oi) is a sample video.
+   - c. [k](https://bit.ly/2J6j5Oi) is a sample video.
 
 **publish_pages:**
 
@@ -598,6 +602,13 @@ In Erxes you can also integrate your Gmail as IMAP.
 
 - Click on the Add account and fill out the form as follows:
 
+```
+IMAP HOST: imap.gmail.com
+IMAP PORT: 993
+SMTP HOST : smtp.gmail.com
+SMTP PORT: 465
+```
+
 > You can also read Google IMAP Settings in [Google Help Center](https://support.google.com/mail/answer/7126229?hl=en)
 
 ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/gmail_imap_2.png)
@@ -611,9 +622,18 @@ In Erxes you can also integrate your Gmail as IMAP.
 
 ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/gmail_imap_4.png)
 
-- Last thing you should do is enable Less secure app access in [Google settings](https://myaccount.google.com/lesssecureapps) because Google automatically blocks third party access.
+- Enable Less secure app access in [Google settings](https://myaccount.google.com/lesssecureapps) because Google automatically blocks third party access.
 
 ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/gmail_imap_5.png)
+- If you're using GSuite account, please the admin should go to the [Google Admin console](https://admin.google.com/u/5/ac/security/lsa) and allow users to manage their access to less secure apps.
+
+- Allow access to your Google account 
+
+![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/nylas-imap.png)
+
+> Please make sure that you selected the correct account in the right sidebar of your browser.
+  if you have a multiple accounts https://accounts.google.com/b/0/DisplayUnlockCaptcha - in this URL **/0/** is your first account
+  **/1/** is second account and so on.
 
 ### Yahoo
 
@@ -693,7 +713,7 @@ When you start erxes-integration repo webhook will automatically created accordi
 
 - If your account is registered less than a month ago, you need to pass a secure authorization to reduce the likelihood of blocking or authorization failure.
 
-  ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/chat-api-whatsapp-1.gif">
+  ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/chat-api-whatsapp-1.gif)
 
 4. Click on **Add Integrations** and select WhatsApp.
 
@@ -737,7 +757,6 @@ When you start erxes-integration repo webhook will automatically created accordi
 
 - You can create an account for testing and development purpose by registering on the [Viber admin panel](https://partners.viber.com/).
 - Fill out all required fields and create your Bot account.
-  ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/smooch-viber-3">
 - You can share the QR code with your customers and partners.
 
 2. Once you have your Public Account token, copy and paste it into Viber token field on the Add Viber page from erxes App Store. Then click on “Save”.
@@ -759,8 +778,6 @@ When you start erxes-integration repo webhook will automatically created accordi
 3. Type /newbot and send it to BotFather. Then follow the instructions from BotFather to create a bot.
 
 ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/smooch-telegram-4.png)
-
-![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/smooch-telegram-5">
 
 - You can share the link with your customers and partners and they can connect with you.
 
@@ -814,8 +831,6 @@ When you start erxes-integration repo webhook will automatically created accordi
 
 9. Get your QR Code from Messaging API tab and share the QR Code with your customers and partners. This code will allow them to connect with you using LINE chat.
 
-![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/smooch-line-9">
-
 10. Go to Setting=> Channel=> Add new channel=> Connect LINE integration.
 
 ### Twilio SMS
@@ -829,8 +844,6 @@ When you start erxes-integration repo webhook will automatically created accordi
 - You can select a number from any country available on Twilio. The only prerequisite for Erxes integration to work is SMS capability. Bear in mind that Twilio does offer numbers without SMS functionality, those won't work.
 
 ![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/smooch-twilio-1.png)
-
-![](https://erxes-docs.s3-us-west-2.amazonaws.com/integration/smooch-twilio-4">
 
 3. Copy and paste your ACCOUNT SID and AUTH TOKEN to corresponding fields on the add Twilio SMS page from erxes App Store.
 

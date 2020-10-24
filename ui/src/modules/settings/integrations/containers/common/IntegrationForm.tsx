@@ -10,6 +10,7 @@ import TelnyxForm from '../../components/telnyx/TelnyxForm';
 import Viber from '../../components/viber/Viber';
 import WebHookForm from '../../components/webhook/Form';
 import Whatsapp from '../../components/whatsapp/Whatsapp';
+import WhatsPro from '../../components/whatspro/WhatsPro';
 import { INTEGRATION_KINDS } from '../../constants';
 import { getRefetchQueries } from '../utils';
 
@@ -88,6 +89,10 @@ class IntegrationFormContainer extends React.Component<FinalProps, State> {
 
     if (type === INTEGRATION_KINDS.WHATSAPP) {
       Component = Whatsapp;
+    }
+
+    if (type === INTEGRATION_KINDS.WHATSPRO) {
+      Component = WhatsPro;
     }
 
     if (type === INTEGRATION_KINDS.TELNYX) {

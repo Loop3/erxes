@@ -83,6 +83,7 @@ export const INTEGRATION_KINDS = {
   SMOOCH_LINE: 'smooch-line',
   SMOOCH_TWILIO: 'smooch-twilio',
   WHATSAPP: 'whatsapp',
+  WHATSPRO: 'whatspro',
   TELNYX: 'telnyx',
   WEBHOOK: 'webhook',
   ALL: [
@@ -108,6 +109,7 @@ export const INTEGRATION_KINDS = {
     { text: 'Line', value: 'smooch-line' },
     { text: 'Twilio', value: 'smooch-twilio' },
     { text: 'WhatsApp', value: 'whatsapp' },
+    { text: 'WhatsPro', value: 'whatspro' },
     { text: 'Telnyx', value: 'telnyx' },
     { text: 'Webhook', value: 'webhook' }
   ]
@@ -307,7 +309,17 @@ export const INTEGRATIONS = [
     category: 'All integrations, For support teams, Messaging, Conversation'
   },
   {
-    name: 'Telegram',
+    name: 'WhatsPro',
+    description: 'Get a hold of your Whatsapp messages through your Team Inbox',
+    inMessenger: false,
+    isAvailable: true,
+    kind: 'whatspro',
+    logo: '/images/integrations/whatsapp.png',
+    createModal: 'whatspro',
+    category: 'All integrations, For support teams, Messaging, Conversation'
+  },
+  {
+    name: 'Telegram by Sunshine Conversations',
     description:
       'Connect to your Telegram, a cloud-based mobile and desktop messaging app',
     inMessenger: false,

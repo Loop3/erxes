@@ -14,6 +14,7 @@ const colorCoreDarkBlue = '#0a1e41';
 const colorCoreBlack = '#393C40';
 const colorCoreGray = '#888';
 const colorCoreLightGray = '#AAAEB3';
+const colorCoreLightGreen = '#25D366';
 
 const colorLightGray = '#AAA';
 const colorLightBlue = '#F8FBFF';
@@ -81,6 +82,7 @@ export default {
   colorLightBlue,
   colorCoreDarkGray,
   colorCoreDarkBlue,
+  colorCoreLightGreen,
 
   bgMain,
   bgDark,

@@ -23,6 +23,7 @@ export default `
   isCustomerRead
   formWidgetData
   messengerAppData
+  botData
   user {
     _id
     username
@@ -76,8 +77,8 @@ export default `
     accountId
     replyToMessageId
     replyTo
-    reply
     references
+    inReplyTo
     headerId
     attachments {
       id

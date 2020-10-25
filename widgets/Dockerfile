@@ -1,17 +1,8 @@
-FROM node:12.16.3-slim
+FROM node:12.18-slim
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update && \
-    apt-get install -y \
-    git nano && \
-    rm -rf /var/lib/apt/lists/*
-
-WORKDIR /erxes
-
-COPY --chown=node:node . /erxes
-
-RUN chown -R node:node /erxes
+WORKDIR /erxes-widgets/
+RUN chown -R node:node /erxes-widgets
+COPY --chown=node:node . /erxes-widgets
 
 USER node
 

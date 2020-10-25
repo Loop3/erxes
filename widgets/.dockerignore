@@ -1,8 +1,6 @@
 *.yml
-.env*
 .git*
 *.md
 .snyk
 Dockerfile*
 *.tar.gz
-

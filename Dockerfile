@@ -11,13 +11,15 @@ WORKDIR /erxes
 
 COPY --chown=node:node . /erxes
 
+WORKDIR /erxes/ui
+
 RUN yarn
 
 RUN yarn build
 
 RUN yarn global add serve
 
-RUN chown -R node:node /erxes
+RUN chown -R node:node /erxes/ui
 
 USER node
 

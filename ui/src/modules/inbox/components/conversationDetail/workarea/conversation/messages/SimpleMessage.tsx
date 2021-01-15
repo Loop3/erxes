@@ -140,6 +140,10 @@ export default class SimpleMessage extends React.Component<Props, {}> {
             <Icon icon="check-1" />
           </div>
         );
+      case '98':
+        return <div style={containerStyles}>{__('Error')} </div>;
+      case '99':
+        return <div style={containerStyles}>{__('Invalid number')}</div>;
       default:
         return <Icon icon="clock" size={10} style={{ marginRight: 4 }} />;
     }
@@ -201,7 +205,8 @@ export default class SimpleMessage extends React.Component<Props, {}> {
 
         <MessageBody staff={isStaff}>
           {this.renderContent(hasAttachment)}
-          {this.renderStatus(message.status, Boolean(message.userId), kind)}
+          {!message.internal &&
+            this.renderStatus(message.status, Boolean(message.userId), kind)}
           <Tip text={dayjs(messageDate).format('lll')}>
             <footer>{dayjs(messageDate).format('LT')}</footer>
           </Tip>

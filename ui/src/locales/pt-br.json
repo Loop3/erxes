@@ -924,5 +924,7 @@
   "Convert to a deal": "Converter em acordo",
   "Convert to a task": "Converter em tarefa",
   "Convert to a ticket": "Converter em ticket",
-  "Resolve all": "Resolver todos"
+  "Resolve all": "Resolver todos",
+  "Error": "Erro",
+  "Invalid number": "Número inválido"
 }
